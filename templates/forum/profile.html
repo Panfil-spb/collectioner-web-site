@@ -1,0 +1,23 @@
+{% extends 'forum/base.html' %}
+
+{% block title%}
+CollectHub -- Профиль
+{% endblock %}
+
+{% block content%}
+<div class="container">
+    <label for=""> <b>Имя:</b> {{ name }}</label>
+    <br>
+    <label for=""> <b>Фамилия:</b> {{ secondname }}</label>
+    <br>
+    <label for=""> <b>Город:</b> {{ town }}</label>
+    <br>
+    <label for=""> <b>Коллекции:</b> </label>
+    {% for i in collections %}
+    <br>
+    <label for=""> {{ i }} </label>
+    {% endfor %}
+
+
+</div>
+{% endblock %}
