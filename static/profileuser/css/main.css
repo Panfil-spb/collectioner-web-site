@@ -1,0 +1,9 @@
+.image-radius {
+    border-radius: 10px;
+    /* Скругление углов изображения */
+    border: 5px solid #fff;
+    /* Цвет и ширину рамки */
+    box-shadow: 2px 1px 5px #999999;
+    /* Цвет и размер тени */
+    width: auto;
+}

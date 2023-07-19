@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from profileuser.models import UserInfo
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -43,6 +44,8 @@ def signupuser(request: HttpRequest) -> HttpResponse:
                     request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
+
+                userinfo = UserInfo.objects.create()
                 return redirect('home')
             except IntegrityError:
                 return render(request, 'forum/signup.html', {'form': UserCreationForm(), 'error': 'Пользователь с таким логином уже сущесвтует!'})
@@ -52,4 +55,4 @@ def signupuser(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def profile(request: HttpRequest) -> HttpResponse:
-    return render(request, 'forum/profile.html', context={'name': 'Вася', 'secondname': 'Пупкин', 'town': 'Санкт-Петербург', 'collections': [1, 1, 1, 2]})
+    return render(request, 'profileuser/profile.html', context={'name': 'Вася', 'secondname': 'Пупкин', 'town': 'Санкт-Петербург', 'collections': [1, 1, 1, 2]})
