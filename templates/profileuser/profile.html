@@ -5,19 +5,28 @@ CollectHub -- Профиль
 {% endblock %}
 
 {% block content%}
+{% load static %}
+<link rel="stylesheet" href="{% static 'profileuser/css/main.css' %}">
 <div class="container">
-    <label for=""> <b>Имя:</b> {{ name }}</label>
-    <br>
-    <label for=""> <b>Фамилия:</b> {{ secondname }}</label>
-    <br>
-    <label for=""> <b>Город:</b> {{ town }}</label>
-    <br>
-    <label for=""> <b>Коллекции:</b> </label>
-    {% for i in collections %}
-    <br>
-    <label for=""> {{ i }} </label>
-    {% endfor %}
+    <hr>
+    <div class="row">
+        <div class="colum">
+            <div class="container md-10">
+                <img src="{% static 'profileuser/img/no_photo.jpg' %}" alt="" class="image-radius" width="300">
+            </div>
+        </div>
+        <div class="colum">
+            <div class="row">
+                <h1><b> {{ firstname }} {{ secondname }}</b></h1>
+            </div>
+            <div class="row">
+                <h2>{{ town }}</h2>
+            </div>
+            <div class="row">
+                <h2>{{ phonenumber }}</h2>
+            </div>
+        </div>
 
-
+    </div>
 </div>
 {% endblock %}
