@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+# from profileuser.forms import UserInfoForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from profileuser.models import UserInfo
+from profileuser.forms import UserInfoForm
+# from profileuser.models import UserInfo
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -36,17 +39,19 @@ def logoutuser(request: HttpRequest):
 
 def signupuser(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
-        return render(request, 'forum/signup.html', {'form': UserCreationForm()})
+        return render(request, 'forum/signup.html', {'user_form': UserCreationForm()})
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.create_user(
-                    request.POST['username'], password=request.POST['password1'])
+                # user = User.objects.create_user(
+                #     username=request.POST['username'], password=request.POST['password1'],
+                #     email=request.POST['email'])
+                user = User.objects.create_user(request.POST)
                 user.save()
                 login(request, user)
-
-                userinfo = UserInfo.objects.create()
-                return redirect('home')
+                user_info = UserInfo.objects.create(
+                    user=user)
+                return redirect('profileuser')
             except IntegrityError:
                 return render(request, 'forum/signup.html', {'form': UserCreationForm(), 'error': 'Пользователь с таким логином уже сущесвтует!'})
         else:

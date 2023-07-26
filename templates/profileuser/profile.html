@@ -9,24 +9,54 @@ CollectHub -- Профиль
 <link rel="stylesheet" href="{% static 'profileuser/css/main.css' %}">
 <div class="container">
     <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="container md-10">
+                    {% if img %}
+                    <img src="{{ img.url }}" alt="" class="image-radius" width="200" height="250">
+                    {% else %}
+                    <img src="{% static 'profileuser\img\no_photo.jpg' %}" alt="" class="image-radius" width="200"
+                        height="250">
+                    {% endif %}
+                </div>
+            </div>
+            <form method="get">
+
+            </form>
+            <div class="col-sm">
+                <div class="row">
+                    <h1><b> {{ firstname }} {{ secondname }}</b></h1>
+                </div>
+                <div class="row">
+                    {% if town %}
+                    <h6>Город: {{ town }}</h6>
+                    {% else %}
+                    <h6>Город: Не указан</h6>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% if phonenumber %}
+                    <h6>Номер телефона: {{ phonenumber }}</h6>
+                    {% else %}
+                    <h6>Номер телефона: Не указан</h6>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="col-sm">
+                <i>Был в сети в {{ last_login }}</i>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="colum">
-            <div class="container md-10">
-                <img src="{% static 'profileuser/img/no_photo.jpg' %}" alt="" class="image-radius" width="300">
-            </div>
+
         </div>
         <div class="colum">
-            <div class="row">
-                <h1><b> {{ firstname }} {{ secondname }}</b></h1>
-            </div>
-            <div class="row">
-                <h2>{{ town }}</h2>
-            </div>
-            <div class="row">
-                <h2>{{ phonenumber }}</h2>
-            </div>
-        </div>
 
+        </div>
     </div>
+    <hr>
 </div>
 {% endblock %}
