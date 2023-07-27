@@ -15,6 +15,7 @@ CollectHub -- Профиль
                 <div class="container md-10">
                     {% if avatar %}
                     <img src="{{ avatar.url }}" alt="" class="image-radius" width="200" height="250">
+
                     {% else %}
                     <img src="{% static 'profileuser\img\no_photo.jpg' %}" alt="" class="image-radius" width="200"
                         height="250">
@@ -44,9 +45,11 @@ CollectHub -- Профиль
                     {% endif %}
 
                 </div>
+                {% if user.id == user_id %}
                 <form action="update" method="get">
                     <button type="{% url 'update_profile' %}" class="btn btn-primary">Редактировать Профиль</button>
                 </form>
+                {% endif %}
             </div>
 
         </div>

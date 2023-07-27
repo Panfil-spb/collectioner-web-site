@@ -3,13 +3,14 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from .models import UserInfo
 from .forms import UserInfoForm
 # Create your views here.
 
 
 @login_required
-def updateprofileinfo(request: HttpRequest) -> HttpResponse:
+def update_profile_info(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
         userinfo = get_object_or_404(UserInfo, user=request.user)
         return render(request, 'profileuser/update_profile.html', {'form': UserInfoForm, 'userinfo': userinfo})
@@ -27,14 +28,26 @@ def updateprofileinfo(request: HttpRequest) -> HttpResponse:
         userinfo.town = request.POST.get('town')
         userinfo.phonenumber = request.POST.get('phonenumber')
         userinfo.save()
-        return redirect('profileuser')
+        return redirect('profileuser', request.user.id)
 
 
 @login_required
-def profileuser(request: HttpRequest) -> HttpResponse:
-    user = request.user
-    obj = get_object_or_404(UserInfo, user=user)
-    print(obj.user_avatar.url)
-    return render(request, 'profileuser/profile.html', {'avatar': obj.user_avatar, 'firstname': obj.first_name, 'secondname': obj.last_name,
+def profil_euser(request: HttpRequest, user_id: int) -> HttpResponse:
+    user = get_object_or_404(User, id=user_id)
+    user_info = get_object_or_404(UserInfo, user=user)
+
+    return render(request, 'profileuser/profile.html', {'avatar': user_info.user_avatar, 'firstname': user_info.first_name, 'secondname': user_info.last_name,
                                                         'last_login': f'{user.last_login.day}.{user.last_login.month}.{user.last_login.year} в {user.last_login.hour}:{user.last_login.minute}',
-                                                        'town': obj.town, 'phonenumber': obj.phonenumber})
+                                                        'town': user_info.town, 'phonenumber': user_info.phonenumber,
+                                                        'user_id': user_id})
+
+
+@login_required
+def view_users(request: HttpRequest):
+    page = request.GET.get('page', 1)
+    users_info = UserInfo.objects.all()
+
+    paginator = Paginator(users_info, 3)
+    page_objs = paginator.get_page(page)
+    page_objs.next_page_number
+    return render(request, 'profileuser/users.html', {'page_objs': page_objs, 'page': page})

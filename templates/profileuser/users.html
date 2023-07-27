@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title%}
+CollectHub -- Профиль
+{% endblock %}
+
+{% block content%}
+{% load static %}
+
+<br>
+{% for user in page_objs %}
+
+
+<div class="card mb-3 mx-auto" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-auto">
+            <br>
+            <div class="container md-10">
+                {% if user.user_avatar %}
+                <img src="{{ user.user_avatar.url }}" class="img-fluid rounded-start image-radius" alt="...">
+                {% else %}
+                <img src="{% static 'profileuser\img\no_photo.jpg' %}" class="img-fluid rounded-start image-radius"
+                    alt="...">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <a href="{% url 'profileuser' user.user.id %}">
+                    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                </a>
+
+                <p class="card-text">Город: {{ user.town }}</p>
+                <p class="card-text"><small class="text-muted">Заходил в последний раз в
+                        {{ user.user.last_login.day }}.{{ user.user.last_login.month }}.{{ user.user.last_login.year
+                        }}
+                        в
+                        {{ user.user.last_login.hour }}:{{ user.user.last_login.minute }}</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endfor %}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page_objs.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_objs.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_objs.previous_page_number }}">
+                {{ page_objs.previous_page_number }}</a></li>
+        {% endif %}
+
+        <li class="page-item"><a class="page-link" href="?page={{ page_objs.number }}">{{ page_objs.number }}</a></li>
+
+        {% if page_objs.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_objs.next_page_number }}">
+                {{ page_objs.next_page_number }}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_objs.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}

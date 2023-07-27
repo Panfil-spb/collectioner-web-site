@@ -51,7 +51,7 @@ def signupuser(request: HttpRequest) -> HttpResponse:
                 login(request, user)
                 user_info = UserInfo.objects.create(
                     user=user)
-                return redirect('profileuser')
+                return redirect('update_profile')
             except IntegrityError:
                 return render(request, 'forum/signup.html', {'form': UserCreationForm(), 'error': 'Пользователь с таким логином уже сущесвтует!'})
         else:
