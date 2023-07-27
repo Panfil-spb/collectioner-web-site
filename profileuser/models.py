@@ -4,8 +4,7 @@ from django.contrib.auth.models import User
 
 
 def user_directory_path(instance, filename):
-    print(f'profileuser/user_{instance.user.id}/{filename}')
-    return f'profileuser/user_{instance.user.id}_avatar_{filename}'
+    return f'profileuser/user_{instance.user.id}/{filename}'
 
 
 class UserInfo(models.Model):

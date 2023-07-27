@@ -13,18 +13,19 @@ CollectHub -- Профиль
         <div class="row">
             <div class="col-sm">
                 <div class="container md-10">
-                    {% if img %}
-                    <img src="{{ img.url }}" alt="" class="image-radius" width="200" height="250">
+                    {% if avatar %}
+                    <img src="{{ avatar }}" alt="" class="image-radius" width="200" height="250">
                     {% else %}
                     <img src="{% static 'profileuser\img\no_photo.jpg' %}" alt="" class="image-radius" width="200"
                         height="250">
                     {% endif %}
                 </div>
-            </div>
-            <form method="get">
 
-            </form>
+            </div>
             <div class="col-sm">
+                <div class="row">
+                    <i>Был в сети в {{ last_login }}</i>
+                </div>
                 <div class="row">
                     <h1><b> {{ firstname }} {{ secondname }}</b></h1>
                 </div>
@@ -43,20 +44,15 @@ CollectHub -- Профиль
                     {% endif %}
 
                 </div>
+                <form action="update" method="get">
+                    <button type="{% url 'update_profile' %}" class="btn btn-primary">Редактировать Профиль</button>
+                </form>
             </div>
-            <div class="col-sm">
-                <i>Был в сети в {{ last_login }}</i>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="colum">
-
-        </div>
-        <div class="colum">
 
         </div>
     </div>
     <hr>
 </div>
+
+<img src="{{ avatar.url }}" alt="">
 {% endblock %}
